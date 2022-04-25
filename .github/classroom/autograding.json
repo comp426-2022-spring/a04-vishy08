@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "Database created",
+      "setup": "npm install",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT > /dev/null; exit 0) & sleep 5s && ls",
+      "input": "",
+      "output": "log.db",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 14000
+    },
+    {
+      "name": "Access log endpoint",
+      "setup": "",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --debug --port=$PORT > /dev/null; exit 0) & sleep 1s && curl http://localhost:${PORT}/app/log/access/ && sleep 5s",
+      "input": "",
+      "output": "\\[\\{.*(id).*\\}\\]",
+      "comparison": "regex",
+      "timeout": 10,
+      "points": 14000
+    },
+    {
+      "name": "Error test endpoint",
+      "setup": "",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --debug --port=$PORT > /dev/null 2>&1; exit 0) & sleep 1s && curl -I http://localhost:${PORT}/app/error/ && sleep 5s",
+      "input": "",
+      "output": "500 Internal Server Error",
+      "comparison": "regex",
+      "timeout": 10,
+      "points": 11429
+    },
+    {
+      "name": "Access log file option --log=false (do not create a log file)",
+      "setup": "SHELL=/bin/bash && if [ -f access.log ]; then rm access.log; fi",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT --log=false > /dev/null; exit 0) & sleep 5s && ls | if [ -f access.log ]; then echo \"fail\"; else echo \"success\"; fi",
+      "input": "",
+      "output": "success",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 14000
+    },
+    {
+      "name": "Help text",
+      "setup": "",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --help; exit 0) & sleep 1s",
+      "input": "",
+      "output": "(--help).*(Return this message and exit.)",
+      "comparison": "regex",
+      "timeout": 10,
+      "points": 14000
+    }
+  ]
+}
