@@ -3,7 +3,7 @@
     {
       "name": "Database created",
       "setup": "npm install",
-      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT > /dev/null; exit 0) & sleep 5s && ls",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT > /dev/null; exit 0) & curl http://localhost:${PORT}/app/ & sleep 5s && ls",
       "input": "",
       "output": "log.db",
       "comparison": "included",
