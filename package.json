@@ -12,9 +12,16 @@
     "url": "git+https://github.com/comp426-2022-spring/a04-vishy08.git"
   },
   "author": "vishy08",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comp426-2022-spring/a04-vishy08/issues"
   },
-  "homepage": "https://github.com/comp426-2022-spring/a04-vishy08#readme"
+  "homepage": "https://github.com/comp426-2022-spring/a04-vishy08#readme",
+  "dependencies": {
+    "better-sqlite3": "^7.5.1",
+    "express": "^4.18.0",
+    "md5": "^2.3.0",
+    "minimist": "^1.2.6",
+    "morgan": "^1.10.0"
+  }
 }

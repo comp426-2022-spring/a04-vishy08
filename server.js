@@ -1,6 +1,17 @@
-const express = require('express')
+const express = require("express")
 const app = express()
+
+const database = require("better-sqlite3")
+
+var md5 = require("md5")
+
+const logdb = require("./database.js")
+
 const myArgs = require('minimist')(process.argv.slice(2))
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 myArgs['port']
 var HTTP_PORT = myArgs.port || 5000
 
