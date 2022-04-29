@@ -53,7 +53,7 @@
     {
       "name": "Node version",
       "setup": "",
-      "run": "node-v",
+      "run": "node -v",
       "input": "",
       "output": "",
       "comparison": "included",
