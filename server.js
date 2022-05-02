@@ -38,10 +38,10 @@ if (args.help || args.h) {
   process.exit(0)
 }
 var ifLog = args.log || 'false'
-if (ifLog == 'true') {
+if (ifLog == 'false') {
   //throw new Error("access file not created")
-  //console.log("access file not created")
-//} else {
+  console.log("access file not created")
+} else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
   const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
