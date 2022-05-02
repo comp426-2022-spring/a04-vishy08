@@ -38,8 +38,8 @@ if (args.help || args.h) {
 }
 
 if (args.log == 'false') {
-  //throw new Error("access file not created")
-  console.log("access file not created")
+  throw new Error("access file not created")
+  //console.log("access file not created")
 } else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
