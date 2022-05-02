@@ -37,16 +37,8 @@ if (args.help || args.h) {
   console.log(help)
   process.exit(0)
 }
-var ifLog = args.log || 'true'
-if (ifLog == 'false') {
-  // Use morgan for logging to files
-  // Create a write stream to append (flags: 'a') to a file
-  const createAccessLog = fs.createWriteStream('access.log', { flags: 'a' })
-  // Set up the access logging middleware
-  app.use(morgan('combined', { stream: createAccessLog }))
-}
-
-/*if (ifLog == 'false') {
+//var ifLog = args.log || 'true'
+if (args.log == 'true') {
   //throw new Error("access file not created")
   console.log("access file not created")
 } else {
@@ -55,7 +47,7 @@ if (ifLog == 'false') {
   const createAccessLog = fs.createWriteStream('access.log', { flags: 'a' })
   // Set up the access logging middleware
   app.use(morgan('combined', { stream: createAccessLog }))
-}*/
+}
 
 app.use((req, res, next) => {
     let logdata = {
@@ -76,8 +68,8 @@ app.use((req, res, next) => {
     next();
 })
 
-var ifDebug = args.debug || false || args.d
-if (ifDebug == 'true') {
+//ar ifDebug = args.debug || false || args.d
+if (args.debug || args.d) {
   app.get('/app/log/access/', (req, res) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
