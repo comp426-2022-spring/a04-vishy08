@@ -72,7 +72,7 @@ app.use((req, res, next) => {
     next();
 })
 
-const ifDebug = args.debug || false || args.d
+/*const ifDebug = args.debug || false || args.d
 if (args.ifDebug) {
   app.get('/app/log/access/', (req, res, next) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
@@ -82,7 +82,17 @@ if (args.ifDebug) {
   app.get('./app/error', (req, res, next) => {
     throw new Error("Error test works.");
   })
+  }*/
+
+  app.get('/app/log/access', (req, res) => {
+    try {
+      const stmt = db.prepare('SELECT * FROM accesslog').all()
+      res.status(200).json(stmt)
+  } catch {
+      console.error(e)
+      console.log('issue found')
   }
+  });
 
   app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
