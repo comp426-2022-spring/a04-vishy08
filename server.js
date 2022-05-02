@@ -90,7 +90,6 @@ if (args.ifDebug) {
       res.status(200).json(stmt)
   } catch {
       console.error(e)
-      console.log('issue found')
   }
   });
 
