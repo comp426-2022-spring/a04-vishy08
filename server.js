@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const morgan = require('morgan')
+//const morgan = require('morgan')
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 const database = require('better-sqlite3')
 
-var md5 = require('md')
+//var md5 = require('md')
 const fs = require('fs')
 
 const logdb = require('./database.js')
