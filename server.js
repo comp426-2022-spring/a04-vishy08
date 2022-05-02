@@ -69,12 +69,12 @@ app.use((req, res, next) => {
 
 //const ifDebug = args.debug || false || args.d
 if (args.debug || args.d || false) {
-  app.get('/app/log/access/', (req, res, next) => {
+  app.get('/app/log/access/', (req, res) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
     console.error(e)
   })
-  app.get('./app/error', (req, res, next) => {
+  app.get('./app/error', (req, res) => {
     throw new Error("Error test works.");
   })
   }
