@@ -1,23 +1,24 @@
 const express = require('express')
 const app = express()
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 const database = require('better-sqlite3')
 
-var md5 = require('md')
+//var md5 = require('md')
+const fs = require('fs')
 
 const logdb = require('./database.js')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
-var HTTP_PORT = args.port || 5000 || process.env.port
+var port = args.port || 5000 || process.env.port
 
 // Start an app server
-const server = app.listen(HTTP_PORT, () => {
-  console.log('App listening on port %PORT%'.replace('%PORT%',HTTP_PORT))
+const server = app.listen(port, () => {
+  console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
-
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
 
 // console.log(args)
 // Store help text 
@@ -37,6 +38,17 @@ server.js [options]
 
 --help	Return this message and exit.
 `)
+
+const ifLog = args.log || true
+if (args.ifLog == 'false') {
+  throw new Error("access file not created")
+} else {
+  // Use morgan for logging to files
+  // Create a write stream to append (flags: 'a') to a file
+  const createAccessLog = fs.createWriteStream('access.log', { flags: 'a' })
+  // Set up the access logging middleware
+  app.use(morgan('combined', { stream: createAccessLog }))
+}
 
 app.use((req, res, next) => {
     let logdata = {
@@ -73,18 +85,6 @@ if (args.ifDebug) {
     throw new Error("Error test works.");
   })
   }
-
-  const ifLog = args.log || true
-  if (args.ifLog == 'false') {
-    throw new Error("access file not created")
-  } else {
-    // Use morgan for logging to files
-    // Create a write stream to append (flags: 'a') to a file
-    const createAccessLog = fs.createWriteStream('access.log', { flags: 'a' })
-    // Set up the access logging middleware
-    app.use(morgan('combined', { stream: createAccessLog }))
-  }
-
 
 /** Simple coin flip
  * 
