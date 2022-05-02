@@ -77,6 +77,7 @@ if (args.ifDebug) {
   app.get('/app/log/access/', (req, res, next) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
+    console.error(e)
   })
   app.get('./app/error', (req, res, next) => {
     throw new Error("Error test works.");
