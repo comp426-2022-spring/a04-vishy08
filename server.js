@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -43,7 +44,7 @@ if (args.help || args.h) {
 
 const ifLog = args.log || true
 if (args.ifLog == 'false') {
-  throw new Error("access file not created")
+  throw new Error("NOTICE: not creating file access.log")
 } else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
