@@ -72,7 +72,6 @@ if (args.debug || args.d || false) {
   app.get('/app/log/access/', (req, res) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
-    console.error(e)
   })
   app.get('./app/error', (req, res) => {
     throw new Error("Error test works.");
@@ -85,7 +84,7 @@ const server = app.listen(port, () => {
 });
 
   app.use(function(req, res){
-    res.status(404).send('404 NOT FOUND')
+    res.status(404).send("404 NOT FOUND")
     res.type("text/plain")
   });
   
