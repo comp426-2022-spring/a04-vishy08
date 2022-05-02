@@ -16,11 +16,6 @@ const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
 var port = args.port || process.env.PORT || 5000
 
-// Start an app server
-const server = app.listen(port, () => {
-  console.log('App listening on port %PORT%'.replace('%PORT%',port))
-});
-
 // console.log(args)
 // Store help text 
 const help = (`
@@ -72,8 +67,8 @@ app.use((req, res, next) => {
     next();
 })
 
-const ifDebug = args.debug || false || args.d
-if (args.ifDebug) {
+//const ifDebug = args.debug || false || args.d
+if (args.debug || args.d) {
   app.get('/app/log/access/', (req, res, next) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
@@ -83,6 +78,11 @@ if (args.ifDebug) {
     throw new Error("Error test works.");
   })
   }
+
+  // Start an app server
+const server = app.listen(port, () => {
+  console.log('App listening on port %PORT%'.replace('%PORT%',port))
+});
 
   app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
