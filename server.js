@@ -37,8 +37,8 @@ if (args.help || args.h) {
   console.log(help)
   process.exit(0)
 }
-var ifLog = args.log || 'true'
-if (ifLog == 'true') {
+//var ifLog = args.log || 'true'
+if (args.log == 'true') {
   //throw new Error("access file not created")
   //console.log("access file not created")
 //} else {
@@ -68,8 +68,8 @@ app.use((req, res, next) => {
     next();
 })
 
-const ifDebug = args.debug || false
-if (ifDebug == 'true') {
+//const ifDebug = args.debug || false
+if (args.debug == 'true') {
   app.get('/app/log/access', (req, res) => {
     try{
       const stmt = db.prepare('SELECT * FROM accesslog').all()
@@ -78,11 +78,10 @@ if (ifDebug == 'true') {
     catch (er){
         console.error(er)
     }
-  })
+  });
   app.get('./app/error', (req, res) => {
-    res.status(500)
     throw new Error("Error test works.");
-  })
+  });
   }
 
   // Start an app server
