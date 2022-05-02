@@ -24,7 +24,7 @@ if (row === undefined) {
     //password TEXT, remote-addr VARCHAR, remote-user VARCHAR, datetime VARCHAR, method VARCHAR, url VARCHAR, http-version NUMERIC, status INTEGER, content-length NUMERIC
     logdb.exec(sqlInit)
 } else {
-    console.log("Log database exists.")
+    console.log('Log database exists.')
 }
 
 module.exports = logdb
