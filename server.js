@@ -86,6 +86,7 @@ if (args.ifDebug) {
 
   app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
+    res.type("text/plain")
   });
   
   app.get('/app/flip/', (req, res) => {
