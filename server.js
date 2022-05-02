@@ -83,6 +83,36 @@ if (args.ifDebug) {
   })
   }
 
+  app.use(function(req, res){
+    res.status(404).send('404 NOT FOUND')
+  });
+  
+  app.get('/app/flip/', (req, res) => {
+      res.status(200).json({'flip':coinFlip()});
+  });
+  
+  app.get('/app/flips/:number', (req, res) => {
+      const flips = coinFlips(req.params.number);
+      res.status(200).json({'raw':flips, 'summary':countFlips(flips)});
+  })
+  
+  app.get('/app/flip/call/heads', (req, res) => {
+      res.status(200).json(flipACoin('heads'));
+  })
+  
+  app.get('/app/flip/call/tails', (req, res) => {
+      res.status(200).json(flipACoin('tails'));
+  })
+  
+  app.get('/app/', (req, res) => {
+      // Respond with status 200
+          res.statusCode = 200;
+      // Respond with status message "OK"
+          res.statusMessage = 'OK';
+          res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
+          res.end(res.statusCode+ ' ' +res.statusMessage)
+      });
+
 /** Simple coin flip
  * 
  * Write a function that accepts no parameters but returns either heads or tails at random.
@@ -183,32 +213,3 @@ if (args.ifDebug) {
   //export {coinFlip, coinFlips, countFlips, flipACoin}
 
       // Default response for any other request
-app.use(function(req, res){
-  res.status(404).send('404 NOT FOUND')
-});
-
-app.get('/app/flip/', (req, res) => {
-    res.status(200).json({'flip':coinFlip()});
-});
-
-app.get('/app/flips/:number', (req, res) => {
-    const flips = coinFlips(req.params.number);
-    res.status(200).json({'raw':flips, 'summary':countFlips(flips)});
-})
-
-app.get('/app/flip/call/heads', (req, res) => {
-    res.status(200).json(flipACoin('heads'));
-})
-
-app.get('/app/flip/call/tails', (req, res) => {
-    res.status(200).json(flipACoin('tails'));
-})
-
-app.get('/app/', (req, res) => {
-    // Respond with status 200
-        res.statusCode = 200;
-    // Respond with status message "OK"
-        res.statusMessage = 'OK';
-        res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-        res.end(res.statusCode+ ' ' +res.statusMessage)
-    });
