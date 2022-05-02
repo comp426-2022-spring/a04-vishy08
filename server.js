@@ -15,7 +15,7 @@ const logdb = require('./database.js')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
-var port = args.port || process.env.PORT || 5000
+var port = args.port || process.env.PORT || 5555
 
 // console.log(args)
 // Store help text 
@@ -37,16 +37,16 @@ if (args.help || args.h) {
   console.log(help)
   process.exit(0)
 }
-//var ifLog = args.log || 'true'
-if (args.log == 'true') {
+var ifLog = args.log || 'true'
+if (ifLog == 'true') {
   //throw new Error("access file not created")
   //console.log("access file not created")
 //} else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
-  const createAccessLog = fs.createWriteStream('access.log', { flags: 'a' })
+  const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
   // Set up the access logging middleware
-  app.use(morgan('combined', { stream: createAccessLog }))
+  app.use(morgan('combined', { stream: accessLog }))
 }
 
 app.use((req, res, next) => {
@@ -68,9 +68,9 @@ app.use((req, res, next) => {
     next();
 })
 
-//ar ifDebug = args.debug || false || args.d
-if (args.debug || args.d) {
-  app.get('/app/log/access/', (req, res) => {
+const ifDebug = args.debug || false
+if (ifDebug == 'true') {
+  app.get('/app/log/access', (req, res) => {
     try{
       const stmt = db.prepare('SELECT * FROM accesslog').all()
       res.status(200).json(stmt)
@@ -79,7 +79,7 @@ if (args.debug || args.d) {
         console.error(er)
     }
   })
-  app.get('./app/error/', (req, res) => {
+  app.get('./app/error', (req, res) => {
     res.status(500)
     throw new Error("Error test works.");
   })
