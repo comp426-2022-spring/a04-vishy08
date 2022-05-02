@@ -69,14 +69,14 @@ app.use((req, res, next) => {
 })
 
 //const ifDebug = args.debug || false
-if (args.debug == 'true') {
+if (args.debug || args.p) {
   app.get('/app/log/access', (req, res) => {
     //try{
       const stmt = db.prepare('SELECT * FROM accesslog').all()
       res.status(200).json(stmt)
     //}
     //catch (er){
-        console.error(er)
+        //console.error(er)
     //}
   });
   app.get('./app/error', (req, res) => {
