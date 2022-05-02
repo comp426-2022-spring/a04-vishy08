@@ -15,7 +15,7 @@ const logdb = require('./database.js')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
-var port = args.port || process.env.PORT || 5555
+var port = args.port || args.p || process.env.PORT || 5000
 
 // console.log(args)
 // Store help text 
