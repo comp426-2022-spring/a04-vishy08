@@ -37,8 +37,8 @@ if (args.help || args.h) {
   console.log(help)
   process.exit(0)
 }
-//var ifLog = args.log || 'true'
-if (args.log == 'true') {
+var ifLog = args.log || 'false'
+if (ifLog == 'true') {
   //throw new Error("access file not created")
   //console.log("access file not created")
 //} else {
@@ -68,16 +68,16 @@ app.use((req, res, next) => {
     next();
 })
 
-//const ifDebug = args.debug || false
-if (args.debug || args.p) {
+const ifDebug = args.debug || false
+if (ifDebug == 'true') {
   app.get('/app/log/access', (req, res) => {
-    //try{
+    try{
       const stmt = logdb.prepare('SELECT * FROM accesslog').all()
       res.status(200).json(stmt)
-    //}
-    //catch (er){
+    }
+    catch (er){
         //console.error(er)
-    //}
+    }
   });
   app.get('./app/error', (req, res) => {
     throw new Error("Error test works.");
