@@ -44,7 +44,7 @@ if (args.help || args.h) {
 
 const ifLog = args.log || true
 if (args.ifLog == 'false') {
-  throw new Error("NOTICE: not creating file access.log")
+  throw new Error("access file not created")
 } else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
