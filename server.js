@@ -68,7 +68,7 @@ app.use((req, res, next) => {
 })
 
 //const ifDebug = args.debug || false || args.d
-if (args.debug || args.d) {
+if (args.debug || args.d || false) {
   app.get('/app/log/access/', (req, res, next) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
     res.status(200).json(stmt)
