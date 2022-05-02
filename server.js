@@ -7,9 +7,9 @@ var md5 = require('md')
 
 const logdb = require('./database.js')
 
-const myArgs = require('minimist')(process.argv.slice(2))
-myArgs['port', 'debug', 'log', 'help']
-var HTTP_PORT = myArgs.port || 5000 || myArgs.p
+const args = require('minimist')(process.argv.slice(2))
+args['port', 'debug', 'log', 'help']
+var HTTP_PORT = args.port || 5000 || process.env.port
 
 // Start an app server
 const server = app.listen(HTTP_PORT, () => {
@@ -58,23 +58,24 @@ app.use((req, res, next) => {
 })
 
 // If --help or -h, echo help text to STDOUT and exit
-if (myArgs.help || myArgs.h) {
+if (args.help || args.h) {
     console.log(help)
     process.exit(0)
 }
 
-const ifDebug = myArgs.debug || false || myArgs.d
-if (myArgs.ifDebug) {
+const ifDebug = args.debug || false || args.d
+if (args.ifDebug) {
   app.get('/app/log/access/', (req, res, next) => {
-    res.status(200).json(logdb.prepare('SELECT * FROM accesslog').all())
+    const stmt = logdb.prepare('SELECT * FROM accesslog').all();
+    res.status(200).json(stmt)
   })
   app.get('./app/error', (req, res, next) => {
     throw new Error("Error test works.");
   })
   }
 
-  const ifLog = myArgs.log || myArgs.l || true
-  if (myArgs.ifLog == 'false') {
+  const ifLog = args.log || true
+  if (args.ifLog == 'false') {
     throw new Error("access file not created")
   } else {
     // Use morgan for logging to files
@@ -185,20 +186,20 @@ if (myArgs.ifDebug) {
   //export {coinFlip, coinFlips, countFlips, flipACoin}
 
 app.get('/app/flip/', (req, res) => {
-    res.json({'flip':coinFlip()});
+    res.status(200).json({'flip':coinFlip()});
 });
 
 app.get('/app/flips/:number', (req, res) => {
     const flips = coinFlips(req.params.number);
-    res.json({'raw':flips, 'summary':countFlips(flips)});
+    res.status(200).json({'raw':flips, 'summary':countFlips(flips)});
 })
 
 app.get('/app/flip/call/heads', (req, res) => {
-    res.json(flipACoin('heads'));
+    res.status(200).json(flipACoin('heads'));
 })
 
 app.get('/app/flip/call/tails', (req, res) => {
-    res.json(flipACoin('tails'));
+    res.status(200).json(flipACoin('tails'));
 })
 
 app.get('/app/', (req, res) => {
