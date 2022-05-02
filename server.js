@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-//const morgan = require('morgan')
+const morgan = require('morgan')
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
