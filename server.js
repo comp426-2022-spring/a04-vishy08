@@ -84,7 +84,7 @@ const server = app.listen(port, () => {
 });
 
   app.use(function(req, res){
-    res.status(404).send('HTTP/1.1 404 NOT FOUND')
+    res.status(404).send('404 NOT FOUND')
     res.type("text/plain")
   });
   
