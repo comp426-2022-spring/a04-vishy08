@@ -38,7 +38,7 @@ if (args.help || args.h) {
   process.exit(0)
 }
 //var ifLog = args.log || 'true'
-if (args.log == 'true') {
+if (args.log == 'false') {
   //throw new Error("access file not created")
   console.log("access file not created")
 } else {
