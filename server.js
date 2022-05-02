@@ -14,7 +14,7 @@ const logdb = require('./database.js')
 
 const args = require('minimist')(process.argv.slice(2))
 args['port', 'debug', 'log', 'help']
-var port = args.port || 5000
+var port = args.port || process.env.PORT || 5000
 
 // Start an app server
 const server = app.listen(port, () => {
