@@ -85,7 +85,7 @@ const server = app.listen(port, () => {
 
   app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
-    res.type("text/html")
+    //res.type("text/html")
   });
   
   app.get('/app/flip/', (req, res) => {
