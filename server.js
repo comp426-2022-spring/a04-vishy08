@@ -42,9 +42,9 @@ if (args.help || args.h) {
   process.exit(0)
 }
 
-const ifLog = args.log || true
-if (args.ifLog == 'false') {
-  throw new Error("access file not created")
+if (args.log == 'false') {
+  //throw new Error("access file not created")
+  console.log("access file not created")
 } else {
   // Use morgan for logging to files
   // Create a write stream to append (flags: 'a') to a file
@@ -72,7 +72,7 @@ app.use((req, res, next) => {
     next();
 })
 
-/*const ifDebug = args.debug || false || args.d
+const ifDebug = args.debug || false || args.d
 if (args.ifDebug) {
   app.get('/app/log/access/', (req, res, next) => {
     const stmt = logdb.prepare('SELECT * FROM accesslog').all();
@@ -82,16 +82,7 @@ if (args.ifDebug) {
   app.get('./app/error', (req, res, next) => {
     throw new Error("Error test works.");
   })
-  }*/
-
-  app.get('/app/log/access', (req, res) => {
-    try {
-      const stmt = db.prepare('SELECT * FROM accesslog').all()
-      res.status(200).json(stmt)
-  } catch {
-      console.error(e)
   }
-  });
 
   app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
