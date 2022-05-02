@@ -71,13 +71,13 @@ app.use((req, res, next) => {
 //const ifDebug = args.debug || false
 if (args.debug == 'true') {
   app.get('/app/log/access', (req, res) => {
-    try{
+    //try{
       const stmt = db.prepare('SELECT * FROM accesslog').all()
       res.status(200).json(stmt)
-    }
-    catch (er){
+    //}
+    //catch (er){
         console.error(er)
-    }
+    //}
   });
   app.get('./app/error', (req, res) => {
     throw new Error("Error test works.");
