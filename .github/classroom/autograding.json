@@ -3,12 +3,12 @@
     {
       "name": "Database created",
       "setup": "npm install",
-      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT > /dev/null; exit 0) & sleep 5s && ls",
+      "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT > /dev/null; exit 0) & curl http://localhost:${PORT}/app/ & sleep 5s && ls",
       "input": "",
       "output": "log.db",
       "comparison": "included",
       "timeout": 10,
-      "points": 14000
+      "points": 16666
     },
     {
       "name": "Access log endpoint",
@@ -18,7 +18,7 @@
       "output": "\\[\\{.*(id).*\\}\\]",
       "comparison": "regex",
       "timeout": 10,
-      "points": 14000
+      "points": 16666
     },
     {
       "name": "Error test endpoint",
@@ -28,17 +28,17 @@
       "output": "500 Internal Server Error",
       "comparison": "regex",
       "timeout": 10,
-      "points": 11429
+      "points": 16667
     },
     {
-      "name": "Access log file option --log=false (do not create a log file)",
+      "name": "Access log file option does not create a log file",
       "setup": "SHELL=/bin/bash && if [ -f access.log ]; then rm access.log; fi",
       "run": "PORT=\"$(shuf -i 2000-65535 -n 1)\"; (timeout --signal=SIGINT 5 node server.js --port=$PORT --log=false > /dev/null; exit 0) & sleep 5s && ls | if [ -f access.log ]; then echo \"fail\"; else echo \"success\"; fi",
       "input": "",
       "output": "success",
       "comparison": "included",
       "timeout": 10,
-      "points": 14000
+      "points": 16667
     },
     {
       "name": "Help text",
@@ -48,7 +48,17 @@
       "output": "(--help).*(Return this message and exit.)",
       "comparison": "regex",
       "timeout": 10,
-      "points": 14000
+      "points": 16667
+    },
+    {
+      "name": "Node version",
+      "setup": "",
+      "run": "node -v",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
     }
   ]
 }
